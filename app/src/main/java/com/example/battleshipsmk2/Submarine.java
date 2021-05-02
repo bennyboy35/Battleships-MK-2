@@ -18,6 +18,11 @@ public class Submarine extends Ship {
     }
 
     @Override
+    public EShipType getType() {
+        return EShipType.SUBMARINE;
+    }
+
+    @Override
     public String getName() {
         return super.getName();
     }

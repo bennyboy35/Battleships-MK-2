@@ -18,6 +18,11 @@ public class PatrolBoat extends Ship {
     }
 
     @Override
+    public EShipType getType() {
+        return EShipType.PATROL_BOAT;
+    }
+
+    @Override
     public String getName() {
         return super.getName();
     }

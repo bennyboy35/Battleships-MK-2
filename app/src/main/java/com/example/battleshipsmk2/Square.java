@@ -31,6 +31,10 @@ public class Square {
         return firedAt;
     }
 
+    public boolean hasShip(){
+
+        return feature.isShip();
+    }
 
 
 

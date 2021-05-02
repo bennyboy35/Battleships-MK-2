@@ -42,4 +42,20 @@ public class Grid {
 
     }
 
+    public boolean attemptToAddShipReturnSuccess(IShip ship, int... positions){
+        if(ship.getLength() != positions.length){
+            return false;
+        }
+
+        for (int position : positions) {
+
+            if(getSquare(position).hasShip()){
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

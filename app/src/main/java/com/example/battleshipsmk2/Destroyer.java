@@ -18,6 +18,11 @@ public class Destroyer extends Ship {
     }
 
     @Override
+    public EShipType getType() {
+        return EShipType.DESTROYER;
+    }
+
+    @Override
     public String getName() {
         return super.getName();
     }

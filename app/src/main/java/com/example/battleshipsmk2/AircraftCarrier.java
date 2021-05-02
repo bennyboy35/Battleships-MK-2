@@ -18,6 +18,11 @@ public class AircraftCarrier extends Ship {
     }
 
     @Override
+    public EShipType getType() {
+        return EShipType.AIRCRAFT_CARRIER;
+    }
+
+    @Override
     public String getName() {
         return super.getName();
     }

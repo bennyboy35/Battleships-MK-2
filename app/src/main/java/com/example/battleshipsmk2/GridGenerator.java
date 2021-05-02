@@ -2,7 +2,7 @@ package com.example.battleshipsmk2;
 
 public class GridGenerator {
 
-    public static Grid generateGrid(int width, int height){
+    public static Grid generateEmptyGrid(int width, int height){
 
         GridDimensions gridDimensions = new GridDimensions(width, height);
         Square[] squares = new Square[gridDimensions.getNumberOfSquares()];

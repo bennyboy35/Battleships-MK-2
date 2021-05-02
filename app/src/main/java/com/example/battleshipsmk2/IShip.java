@@ -5,5 +5,6 @@ public interface IShip extends IFeature{
     int getLength();
 
     boolean isSunk();
+    EShipType getType();
 
 }

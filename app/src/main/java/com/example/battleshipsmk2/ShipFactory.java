@@ -17,10 +17,18 @@ public class ShipFactory {
                 return new PatrolBoat(shipType.getLength(), shipType.getName());
             default:
                 throw new IllegalArgumentException("Unrecognized ship type");
+        }
+    }
 
+
+    public static IShip[] buildShips(EShipType... shipTypes){
+        IShip[] ships = new IShip[shipTypes.length];
+        for(int i = 0; i < shipTypes.length; i++){
+
+            ships[i] = buildShip(shipTypes[i]);
 
         }
-
+        return ships;
     }
 
 }

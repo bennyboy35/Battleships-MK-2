@@ -18,6 +18,11 @@ public class Frigate extends Ship {
     }
 
     @Override
+    public EShipType getType() {
+        return EShipType.FRIGATE;
+    }
+
+    @Override
     public String getName() {
         return super.getName();
     }
