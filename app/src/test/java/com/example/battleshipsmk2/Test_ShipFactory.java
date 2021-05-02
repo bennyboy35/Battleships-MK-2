@@ -33,7 +33,7 @@ public class Test_ShipFactory {
         ships.add(new Frigate(3, "Frigate"));
         ships.add(new Water());
 
-
+int egg = 0;
     }
 
 
