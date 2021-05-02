@@ -1,6 +1,6 @@
 package com.example.battleshipsmk2;
 
-public abstract class Ship implements IFeature, IShip {
+public abstract class Ship implements IShip {
 
     private final int length;
     private final int health;
@@ -35,4 +35,13 @@ public abstract class Ship implements IFeature, IShip {
 
     }
 
+    @Override
+    public boolean isShip() {
+        return true;
+    }
+
+    @Override
+    public boolean isWater() {
+        return false;
+    }
 }

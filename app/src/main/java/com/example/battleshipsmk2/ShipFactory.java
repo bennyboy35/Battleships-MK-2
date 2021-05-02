@@ -2,7 +2,7 @@ package com.example.battleshipsmk2;
 
 public class ShipFactory {
 
-    public static IFeature buildShip(EShipType shipType){
+    public static IShip buildShip(EShipType shipType){
 
         switch(shipType){
             case DESTROYER:

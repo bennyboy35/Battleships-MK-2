@@ -10,4 +10,16 @@ public class Water implements IFeature{
     public String getName() {
         return "Water";
     }
+
+    @Override
+    public boolean isShip() {
+        return false;
+    }
+
+    @Override
+    public boolean isWater() {
+        return true;
+    }
+
+
 }

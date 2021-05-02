@@ -1,6 +1,13 @@
 package com.example.battleshipsmk2;
 
-import org.junit.Test;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,29 +19,31 @@ public class Test_ShipFactory {
 
     private GridDimensions gridDimensions;
 
+    @Test(dataProvider = "shipTests")
+    public void test_ShipCreation(EShipType shipType, String expectedName, int expectedLength) {
 
-    @Test
-    public void test_GenerateGrid3x3() {
-        List<IFeature> ships = new ArrayList<>();
+            IShip ship = ShipFactory.buildShip(shipType);
+            assertEquals(ship.getName(), expectedName);
+            assertEquals(ship.getLength(), expectedLength);
+            assertFalse(ship.isSunk());
+            assertTrue(ship.isShip());
+            assertFalse(ship.isWater());
 
-
-        for(EShipType type: EShipType.values()){
-
-            ships.add(ShipFactory.buildShip(type));
-
-        }
     }
 
 
-    @Test
-    public void Test_scratch() {
-        List<IFeature> ships = new ArrayList<>();
+    @DataProvider(name = "shipTests")
+    public Object[][] shipTests() {
 
-        ships.add(new Frigate(3, "Frigate"));
-        ships.add(new Water());
+        return new Object[][]{
+                {EShipType.SUBMARINE, "Submarine", 3},
+                {EShipType.DESTROYER, "Destroyer", 4},
+                {EShipType.AIRCRAFT_CARRIER, "Aircraft Carrier", 5},
+                {EShipType.FRIGATE, "Frigate", 3},
+                {EShipType.PATROL_BOAT, "Patrol Boat", 2},
 
-int egg = 0;
+
+        };
     }
-
 
 }

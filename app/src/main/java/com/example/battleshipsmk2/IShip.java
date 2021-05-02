@@ -1,6 +1,6 @@
 package com.example.battleshipsmk2;
 
-public interface IShip {
+public interface IShip extends IFeature{
 
     int getLength();
 
