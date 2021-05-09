@@ -3,7 +3,7 @@ package com.example.battleshipsmk2;
 public abstract class Ship implements IShip {
 
     private final int length;
-    private final int health;
+    private int health;
     private final String name;
 
     Ship(int length, String name) {
@@ -19,6 +19,12 @@ public abstract class Ship implements IShip {
 
         return length;
 
+    }
+
+
+    @Override
+    public void hitShip() {
+        health--;
     }
 
     @Override

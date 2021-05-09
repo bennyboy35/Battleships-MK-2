@@ -37,7 +37,10 @@ public class GridDimensions {
     }
 
     public int getSquareIndex(int columnIndex, int rowIndex){
+        if (columnIndex < 0 || columnIndex >= width || rowIndex < 0 || rowIndex >= height){
 
+            throw new IllegalArgumentException("Index out of bounds");
+        }
         return (rowIndex * width) + columnIndex;
 
     }
@@ -48,6 +51,46 @@ public class GridDimensions {
 
     }
 
+    public boolean willShipRemainInBounds(int colIndex, int rowIndex, EShipType shipType, EDirection direction) {
+        int squareIndex = -1;
+        try {
+            squareIndex = getSquareIndex(colIndex, rowIndex);
+        }
+        catch(IllegalArgumentException exception){
+
+            return false;
+        }
+
+
+        if (squareIndex < 0 || squareIndex >= getNumberOfSquares()) {
+            return false;
+        }
+
+        switch (direction) {
+
+            case NORTH:
+                return rowIndex + 1 - shipType.getLength() >= 0;
+
+            case EAST:
+                return colIndex + shipType.getLength() <= width;
+
+            case SOUTH:
+                return rowIndex + shipType.getLength() <= height;
+
+            case WEST:
+                return colIndex + 1 - shipType.getLength() >= 0;
+
+            default:
+                throw new IllegalArgumentException("Unrecognised Direction");
+        }
+    }
+
+
+    public boolean willShipRemainInBounds(int squareIndex, EShipType shipType, EDirection direction) {
+
+        return willShipRemainInBounds(getColumnIndex(squareIndex), getRowIndex(squareIndex),shipType, direction );
+
+    }
 
 }
 

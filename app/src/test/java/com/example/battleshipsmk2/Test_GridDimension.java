@@ -1,8 +1,7 @@
 package com.example.battleshipsmk2;
 
-import org.junit.Before;
-import org.junit.Test;
-
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import static org.junit.Assert.*;
 
 
@@ -10,117 +9,99 @@ public class Test_GridDimension {
 
     private GridDimensions gridDimensions;
 
-
-    @Test
-    public void test_GetRow3x3() {
-
-        gridDimensions = new GridDimensions(3, 3);
-        assertEquals(9, gridDimensions.getNumberOfSquares());
-
-        assertEquals(0, gridDimensions.getRowIndex(0));
-        assertEquals(0, gridDimensions.getRowIndex(1));
-        assertEquals(0, gridDimensions.getRowIndex(2));
-        assertEquals(1, gridDimensions.getRowIndex(3));
-        assertEquals(1, gridDimensions.getRowIndex(4));
-        assertEquals(1, gridDimensions.getRowIndex(5));
-        assertEquals(2, gridDimensions.getRowIndex(6));
-        assertEquals(2, gridDimensions.getRowIndex(7));
-        assertEquals(2, gridDimensions.getRowIndex(8));
+    @Test(dataProvider = "outOfBounds")
+    public void Test_IndexOutOfBounds(int width, int height, int colIndex, int rowIndex) {
+        gridDimensions = new GridDimensions(width, height);
+        assertThrows(IllegalArgumentException.class,() ->{
+            gridDimensions.getSquareIndex(colIndex, rowIndex);
+        });
 
     }
 
-
-    @Test
-    public void test_GetColumn3x3() {
-
-        gridDimensions = new GridDimensions(3, 3);
-        assertEquals(9, gridDimensions.getNumberOfSquares());
-
-        assertEquals(0, gridDimensions.getColumnIndex(0));
-        assertEquals(1, gridDimensions.getColumnIndex(1));
-        assertEquals(2, gridDimensions.getColumnIndex(2));
-        assertEquals(0, gridDimensions.getColumnIndex(3));
-        assertEquals(1, gridDimensions.getColumnIndex(4));
-        assertEquals(2, gridDimensions.getColumnIndex(5));
-        assertEquals(0, gridDimensions.getColumnIndex(6));
-        assertEquals(1, gridDimensions.getColumnIndex(7));
-        assertEquals(2, gridDimensions.getColumnIndex(8));
+    @Test(dataProvider = "indexes")
+    public void Test_Indexes(int width, int height, int expectedNoOfSquares, int squareIndex, int colIndex, int rowIndex) {
+        gridDimensions = new GridDimensions(width, height);
+        assertEquals(expectedNoOfSquares, gridDimensions.getNumberOfSquares());
+        assertEquals(rowIndex ,gridDimensions.getRowIndex(squareIndex));
+        assertEquals(colIndex ,gridDimensions.getColumnIndex(squareIndex));
+        assertEquals(squareIndex, gridDimensions.getSquareIndex(colIndex, rowIndex));
 
     }
 
-    @Test
-    public void test_GetRow10x8() {
-
-        gridDimensions = new GridDimensions(10, 8);
-        assertEquals(80, gridDimensions.getNumberOfSquares());
-
-        assertEquals(0, gridDimensions.getRowIndex(0));
-        assertEquals(1, gridDimensions.getRowIndex(19));
-        assertEquals(2, gridDimensions.getRowIndex(20));
-        assertEquals(7, gridDimensions.getRowIndex(70));
-        assertEquals(7, gridDimensions.getRowIndex(79));
-        assertEquals(1, gridDimensions.getRowIndex(12));
-        assertEquals(5, gridDimensions.getRowIndex(56));
-        assertEquals(4, gridDimensions.getRowIndex(43));
-        assertEquals(2, gridDimensions.getRowIndex(27));
+    @Test(dataProvider = "inBounds")
+    public void Test_InBounds(int width, int height, int colIndex, int rowIndex, EShipType shipType, EDirection direction, boolean inbounds) {
+        gridDimensions = new GridDimensions(width, height);
+        assertEquals(inbounds, gridDimensions.willShipRemainInBounds(colIndex, rowIndex, shipType, direction));
 
     }
 
+    @DataProvider(name = "outOfBounds")
+    public Object[][] OutBoundTests() {
 
-    @Test
-    public void test_GetColumn10x8() {
-
-        gridDimensions = new GridDimensions(10, 8);
-        assertEquals(80, gridDimensions.getNumberOfSquares());
-
-        assertEquals(0, gridDimensions.getColumnIndex(0));
-        assertEquals(9, gridDimensions.getColumnIndex(19));
-        assertEquals(0, gridDimensions.getColumnIndex(20));
-        assertEquals(0, gridDimensions.getColumnIndex(70));
-        assertEquals(9, gridDimensions.getColumnIndex(79));
-        assertEquals(2, gridDimensions.getColumnIndex(12));
-        assertEquals(6, gridDimensions.getColumnIndex(56));
-        assertEquals(3, gridDimensions.getColumnIndex(43));
-        assertEquals(7, gridDimensions.getColumnIndex(27));
-
+        return new Object[][]{
+                {5, 5, 7, 2},
+                {5, 5, 3, 9},
+                {7, 9, 3, 9}
+        };
     }
 
+    @DataProvider(name = "inBounds")
+    public Object[][] inBoundTests() {
 
-    @Test
-    public void test_GetSquareIndex3x3() {
+        return new Object[][]{
+                {5, 5, 7, 2, EShipType.PATROL_BOAT, EDirection.SOUTH, false},
+                {5, 5, 3, 9, EShipType.PATROL_BOAT, EDirection.SOUTH, false},
 
-        gridDimensions = new GridDimensions(3, 3);
-        assertEquals(9, gridDimensions.getNumberOfSquares());
+                {5, 5, 0, 0, EShipType.PATROL_BOAT, EDirection.NORTH, false},
+                {5, 5, 0, 0, EShipType.DESTROYER, EDirection.NORTH, false},
+                {5, 5, 0, 0, EShipType.DESTROYER, EDirection.SOUTH, true},
+                {5, 5, 2, 1, EShipType.DESTROYER, EDirection.SOUTH, true},
+                {5, 5, 2, 2, EShipType.DESTROYER, EDirection.SOUTH, false},
+                {5, 5, 2, 2, EShipType.SUBMARINE, EDirection.SOUTH, true},
 
-        assertEquals(0, gridDimensions.getSquareIndex(0, 0));
-        assertEquals(1, gridDimensions.getSquareIndex(1, 0));
-        assertEquals(2, gridDimensions.getSquareIndex(2, 0));
-        assertEquals(3, gridDimensions.getSquareIndex(0, 1));
-        assertEquals(4, gridDimensions.getSquareIndex(1, 1));
-        assertEquals(5, gridDimensions.getSquareIndex(2, 1));
-        assertEquals(6, gridDimensions.getSquareIndex(0, 2));
-        assertEquals(7, gridDimensions.getSquareIndex(1, 2));
-        assertEquals(8, gridDimensions.getSquareIndex(2, 2));
+                {5, 5, 0, 0, EShipType.PATROL_BOAT, EDirection.WEST, false},
+                {5, 5, 0, 0, EShipType.DESTROYER, EDirection.WEST, false},
+                {5, 5, 0, 0, EShipType.DESTROYER, EDirection.EAST, true},
+                {5, 5, 2, 1, EShipType.DESTROYER, EDirection.EAST, false},
+                {5, 5, 2, 2, EShipType.DESTROYER, EDirection.EAST, false},
+                {5, 5, 2, 2, EShipType.SUBMARINE, EDirection.EAST, true},
 
+                {10, 8, 2, 1, EShipType.FRIGATE, EDirection.NORTH, false},
+                {10, 8, 6, 6, EShipType.AIRCRAFT_CARRIER, EDirection.EAST, false},
+                {10, 8, 2, 9, EShipType.FRIGATE, EDirection.SOUTH, false},
+                {10, 8, 11, 2, EShipType.AIRCRAFT_CARRIER, EDirection.WEST, false},
+                {10, 8, 2, 2, EShipType.FRIGATE, EDirection.NORTH, true},
+                {10, 8, 2, 2, EShipType.AIRCRAFT_CARRIER, EDirection.EAST, true},
+                {10, 8, 2, 2, EShipType.FRIGATE, EDirection.SOUTH, true},
+                {10, 8, 6, 7, EShipType.AIRCRAFT_CARRIER, EDirection.WEST, true},
+        };
     }
 
+    @DataProvider(name = "indexes")
+    public Object[][] shipTests() {
 
-    @Test
-    public void test_GetSquareIndex10x8() {
+        return new Object[][]{
+                {3, 3, 9, 0, 0, 0},
+                {3, 3, 9, 1, 1, 0},
+                {3, 3, 9, 2, 2, 0},
+                {3, 3, 9, 3, 0, 1},
+                {3, 3, 9, 4, 1, 1},
+                {3, 3, 9, 5, 2, 1},
+                {3, 3, 9, 6, 0, 2},
+                {3, 3, 9, 7, 1, 2},
+                {3, 3, 9, 8, 2, 2},
 
-        gridDimensions = new GridDimensions(10, 8);
-        assertEquals(80, gridDimensions.getNumberOfSquares());
+                {10, 8, 80, 0, 0, 0},
+                {10, 8, 80, 19, 9, 1},
+                {10, 8, 80, 20, 0, 2},
+                {10, 8, 80, 70, 0, 7},
+                {10, 8, 80, 79, 9, 7},
+                {10, 8, 80, 12, 2, 1},
+                {10, 8, 80, 56, 6, 5},
+                {10, 8, 80, 43, 3, 4},
+                {10, 8, 80, 27, 7, 2},
 
-        assertEquals(0, gridDimensions.getSquareIndex(0 ,0));
-        assertEquals(19, gridDimensions.getSquareIndex(9 ,1));
-        assertEquals(20, gridDimensions.getSquareIndex(0 ,2 ));
-        assertEquals(70, gridDimensions.getSquareIndex(0, 7));
-        assertEquals(79, gridDimensions.getSquareIndex(9 , 7));
-        assertEquals(12, gridDimensions.getSquareIndex(2, 1));
-        assertEquals(56, gridDimensions.getSquareIndex(6,5));
-        assertEquals(43, gridDimensions.getSquareIndex(3,4));
-        assertEquals(27, gridDimensions.getSquareIndex(7,2));
+        };
     }
-
 
 }
