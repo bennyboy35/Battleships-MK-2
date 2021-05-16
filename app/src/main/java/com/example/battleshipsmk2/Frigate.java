@@ -26,4 +26,5 @@ public class Frigate extends Ship {
     public String getName() {
         return super.getName();
     }
+
 }

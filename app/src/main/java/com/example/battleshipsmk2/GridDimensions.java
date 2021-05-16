@@ -1,5 +1,8 @@
 package com.example.battleshipsmk2;
 
+import com.example.battleshipsmk2.Exceptions.GridDimensionsException;
+import java.util.Arrays;
+
 public class GridDimensions {
 
     private int width;
@@ -39,7 +42,7 @@ public class GridDimensions {
     public int getSquareIndex(int columnIndex, int rowIndex){
         if (columnIndex < 0 || columnIndex >= width || rowIndex < 0 || rowIndex >= height){
 
-            throw new IllegalArgumentException("Index out of bounds");
+            throw new GridDimensionsException("Index out of bounds");
         }
         return (rowIndex * width) + columnIndex;
 
@@ -56,7 +59,7 @@ public class GridDimensions {
         try {
             squareIndex = getSquareIndex(colIndex, rowIndex);
         }
-        catch(IllegalArgumentException exception){
+        catch(GridDimensionsException exception){
 
             return false;
         }
@@ -81,7 +84,7 @@ public class GridDimensions {
                 return colIndex + 1 - shipType.getLength() >= 0;
 
             default:
-                throw new IllegalArgumentException("Unrecognised Direction");
+                throw new GridDimensionsException("Unrecognised Direction");
         }
     }
 
@@ -92,6 +95,46 @@ public class GridDimensions {
 
     }
 
+    public int[] getShipPositionIndexes(int colIndex, int rowIndex, EShipType shipType, EDirection direction){
+
+        if(!willShipRemainInBounds(colIndex, rowIndex, shipType, direction)){
+
+            return new int[0] ;
+        }
+
+        int[] positions = new int[shipType.getLength()];
+
+        switch(direction){
+
+            case NORTH:
+                for(int i = 0; i < shipType.getLength(); i++){
+                    positions[i] = getSquareIndex(colIndex, rowIndex - i);
+                }
+                break;
+            case EAST:
+                for(int i = 0; i < shipType.getLength(); i++){
+                    positions[i] = getSquareIndex(colIndex + i, rowIndex);
+                }
+                break;
+            case SOUTH:
+                for(int i = 0; i < shipType.getLength(); i++){
+                    positions[i] = getSquareIndex(colIndex, rowIndex + i);
+                }
+                break;
+            case WEST:
+                for(int i = 0; i < shipType.getLength(); i++){
+                    positions[i] = getSquareIndex(colIndex - i, rowIndex);
+                }
+                break;
+        }
+        Arrays.sort(positions);
+        return positions;
+    }
+
+    public int[] getShipPositionIndexes(int squareIndex, EShipType shipType, EDirection direction) {
+
+        return getShipPositionIndexes(getColumnIndex(squareIndex), getRowIndex(squareIndex), shipType, direction);
+    }
 }
 
 

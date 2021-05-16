@@ -6,6 +6,5 @@ public interface IShip extends IFeature{
 
     boolean isSunk();
     EShipType getType();
-    void hitShip();
-
+    void hitShip(int squareIndex);
 }
