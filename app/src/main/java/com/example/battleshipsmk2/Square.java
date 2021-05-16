@@ -36,7 +36,10 @@ public class Square {
         return feature.isShip();
     }
 
+    public void addShip(IShip ship){
 
+        feature = ship;
+    }
 
 
 }

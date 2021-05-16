@@ -41,21 +41,36 @@ public class Grid {
         }
 
     }
+    public boolean attemptToAddShipReturnSuccess(int colIndex, int rowIndex, EShipType shipType, EDirection direction){
 
-    public boolean attemptToAddShipReturnSuccess(IShip ship, int... positions){
-        if(ship.getLength() != positions.length){
+        return attemptToAddShipReturnSuccess(gridDimensions.getSquareIndex(colIndex, rowIndex), shipType, direction);
+    }
+
+
+    public boolean attemptToAddShipReturnSuccess(int squareIndex, EShipType shipType, EDirection direction){
+        if (!gridDimensions.willShipRemainInBounds(squareIndex, shipType, direction)){
             return false;
         }
 
+        int[] positions = gridDimensions.getShipPositionIndexes(squareIndex, shipType, direction);
+
+        if (checkPositionsForExistingShips(positions)){
+            return false;
+        }
+        IShip ship = ShipFactory.buildShip(shipType);
         for (int position : positions) {
+            getSquare(position).addShip(ship);
+        }
+        return true;
+    }
 
-            if(getSquare(position).hasShip()){
-
-                return false;
+    private boolean checkPositionsForExistingShips(int[] positions) {
+        for (int position : positions) {
+            if (getSquare(position).hasShip()) {
+                return true;
             }
         }
-
-        return true;
+        return false;
     }
 
 }
