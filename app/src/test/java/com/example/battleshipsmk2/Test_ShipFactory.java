@@ -1,5 +1,10 @@
 package com.example.battleshipsmk2;
 
+import com.example.battleshipsmk2.Grid.GridDimensions;
+import com.example.battleshipsmk2.Ships.EShipType;
+import com.example.battleshipsmk2.Ships.IShip;
+import com.example.battleshipsmk2.Ships.ShipFactory;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -15,28 +20,15 @@ public class Test_ShipFactory {
 
     @Test(dataProvider = "shipTests")
     public void test_ShipCreation(EShipType shipType, String expectedName, int expectedLength) {
-
-        IShip ship = ShipFactory.buildShip(shipType);
+        gridDimensions = new GridDimensions(10,10);
+        int[] positions = gridDimensions.getShipPositionIndexes(0, shipType, EDirection.EAST);
+        IShip ship = ShipFactory.buildShip(shipType, positions);
         assertEquals(ship.getName(), expectedName);
         assertEquals(ship.getLength(), expectedLength);
         assertFalse(ship.isSunk());
         assertTrue(ship.isShip());
         assertFalse(ship.isWater());
-
     }
-
-
-    @Test
-    public void test_MultiShipCreation() {
-
-        EShipType[] setup = new EShipType[]{EShipType.DESTROYER, EShipType.AIRCRAFT_CARRIER, EShipType.PATROL_BOAT, EShipType.FRIGATE};
-        IShip[] ships = ShipFactory.buildShips(setup);
-        assertEquals(ships.length, setup.length);
-        for (int i = 0; i < setup.length; i++) {
-            assertEquals(ships[i].getType(), setup[i]);
-        }
-    }
-
 
     @DataProvider(name = "shipTests")
     public Object[][] shipTests() {

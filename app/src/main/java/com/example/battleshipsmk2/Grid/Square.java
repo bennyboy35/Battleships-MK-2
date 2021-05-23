@@ -1,4 +1,7 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Grid;
+
+import com.example.battleshipsmk2.Ships.IFeature;
+import com.example.battleshipsmk2.Ships.IShip;
 
 public class Square {
 

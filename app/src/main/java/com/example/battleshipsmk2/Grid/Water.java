@@ -1,6 +1,8 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Grid;
 
-public class Water implements IFeature{
+import com.example.battleshipsmk2.Ships.IFeature;
+
+public class Water implements IFeature {
 
     Water(){
 

@@ -1,6 +1,9 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Grid;
 
+import com.example.battleshipsmk2.EDirection;
 import com.example.battleshipsmk2.Exceptions.GridDimensionsException;
+import com.example.battleshipsmk2.Ships.EShipType;
+
 import java.util.Arrays;
 
 public class GridDimensions {
@@ -8,7 +11,7 @@ public class GridDimensions {
     private int width;
     private int height;
 
-    GridDimensions(int width, int height){
+    public GridDimensions(int width, int height){
 
         this.width = width;
         this.height = height;

@@ -1,5 +1,9 @@
 package com.example.battleshipsmk2;
 
+import com.example.battleshipsmk2.Grid.Grid;
+import com.example.battleshipsmk2.Grid.GridDimensions;
+import com.example.battleshipsmk2.Grid.GridGenerator;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

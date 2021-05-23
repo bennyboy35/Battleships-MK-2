@@ -1,10 +1,10 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Ships;
 
-public class Destroyer extends Ship {
+public class AircraftCarrier extends Ship {
 
 
-    Destroyer(int length, String name) {
-        super(length, name);
+    AircraftCarrier(int length, String name, int... positions) {
+        super(length, name, positions);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class Destroyer extends Ship {
 
     @Override
     public EShipType getType() {
-        return EShipType.DESTROYER;
+        return EShipType.AIRCRAFT_CARRIER;
     }
 
     @Override

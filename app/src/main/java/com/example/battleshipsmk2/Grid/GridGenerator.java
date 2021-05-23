@@ -1,4 +1,4 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Grid;
 
 public class GridGenerator {
 

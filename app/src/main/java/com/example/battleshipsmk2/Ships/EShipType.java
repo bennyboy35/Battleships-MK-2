@@ -1,4 +1,4 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Ships;
 
 public enum EShipType {
 

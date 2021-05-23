@@ -1,6 +1,8 @@
 package com.example.battleshipsmk2;
 
 import com.example.battleshipsmk2.Exceptions.GridDimensionsException;
+import com.example.battleshipsmk2.Grid.GridDimensions;
+import com.example.battleshipsmk2.Ships.EShipType;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

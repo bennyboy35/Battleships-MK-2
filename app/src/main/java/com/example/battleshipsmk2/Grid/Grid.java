@@ -1,4 +1,9 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Grid;
+
+import com.example.battleshipsmk2.EDirection;
+import com.example.battleshipsmk2.Ships.EShipType;
+import com.example.battleshipsmk2.Ships.IShip;
+import com.example.battleshipsmk2.Ships.ShipFactory;
 
 public class Grid {
 
@@ -57,7 +62,7 @@ public class Grid {
         if (checkPositionsForExistingShips(positions)){
             return false;
         }
-        IShip ship = ShipFactory.buildShip(shipType);
+        IShip ship = ShipFactory.buildShip(shipType, positions);
         for (int position : positions) {
             getSquare(position).addShip(ship);
         }

@@ -1,10 +1,10 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Ships;
 
 public class PatrolBoat extends Ship {
 
 
-    PatrolBoat(int length, String name) {
-        super(length, name);
+    PatrolBoat(int length, String name, int... positions) {
+        super(length, name, positions);
     }
 
     @Override

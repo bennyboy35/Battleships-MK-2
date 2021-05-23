@@ -1,8 +1,9 @@
 package com.example.battleshipsmk2;
 
-import com.example.battleshipsmk2.Exceptions.ShipException;
+import com.example.battleshipsmk2.Grid.Grid;
+import com.example.battleshipsmk2.Grid.GridGenerator;
+import com.example.battleshipsmk2.Ships.EShipType;
 
-import org.junit.Before;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
