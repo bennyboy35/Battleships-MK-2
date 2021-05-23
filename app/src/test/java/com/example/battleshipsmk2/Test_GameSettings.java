@@ -14,7 +14,8 @@ public class Test_GameSettings {
 
     @Test(dataProvider = "gameSettings")
     public void test_GameSettings(EShipType shipType, int numberOfShips) {
-            GameSettings.setNumberOfShips(shipType, numberOfShips);
+        GameSettings gameSettings = new GameSettings();
+            gameSettings.setNumberOfShips(shipType, numberOfShips);
             assertEquals(shipType.getNumberOfShips(), numberOfShips);
 
     }

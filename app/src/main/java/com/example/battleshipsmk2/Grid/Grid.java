@@ -1,6 +1,7 @@
 package com.example.battleshipsmk2.Grid;
 
 import com.example.battleshipsmk2.EDirection;
+import com.example.battleshipsmk2.Exceptions.GridDimensionsException;
 import com.example.battleshipsmk2.Ships.EShipType;
 import com.example.battleshipsmk2.Ships.IShip;
 import com.example.battleshipsmk2.Ships.ShipFactory;
@@ -47,8 +48,12 @@ public class Grid {
 
     }
     public boolean attemptToAddShipReturnSuccess(int colIndex, int rowIndex, EShipType shipType, EDirection direction){
-
-        return attemptToAddShipReturnSuccess(gridDimensions.getSquareIndex(colIndex, rowIndex), shipType, direction);
+        try{
+            return attemptToAddShipReturnSuccess(gridDimensions.getSquareIndex(colIndex, rowIndex), shipType, direction);
+        }
+        catch(GridDimensionsException exception) {
+            return false;
+        }
     }
 
 
