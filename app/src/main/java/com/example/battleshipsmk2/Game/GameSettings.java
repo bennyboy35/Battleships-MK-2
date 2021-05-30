@@ -1,5 +1,6 @@
-package com.example.battleshipsmk2;
+package com.example.battleshipsmk2.Game;
 
+import com.example.battleshipsmk2.EGridLayout;
 import com.example.battleshipsmk2.Ships.EShipType;
 
 public class GameSettings {

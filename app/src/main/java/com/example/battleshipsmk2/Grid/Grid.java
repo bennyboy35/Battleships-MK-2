@@ -2,6 +2,9 @@ package com.example.battleshipsmk2.Grid;
 
 import com.example.battleshipsmk2.EDirection;
 import com.example.battleshipsmk2.Exceptions.GridDimensionsException;
+import com.example.battleshipsmk2.Exceptions.GridException;
+import com.example.battleshipsmk2.Game.EShotResult;
+import com.example.battleshipsmk2.Game.IShotResult;
 import com.example.battleshipsmk2.Ships.EShipType;
 import com.example.battleshipsmk2.Ships.IShip;
 import com.example.battleshipsmk2.Ships.ShipFactory;
@@ -81,6 +84,22 @@ public class Grid {
             }
         }
         return false;
+    }
+
+    public IShotResult fireAtSquare(int colIndex, int rowIndex){
+        if (colIndex < 0 || colIndex >= gridDimensions.getWidth() || rowIndex < 0 || rowIndex >= gridDimensions.getHeight()){
+            throw new GridException("Firing at a square that is out of bounds");
+        }
+        return fireAtSquare(gridDimensions.getSquareIndex(colIndex, rowIndex));
+    }
+
+    public IShotResult fireAtSquare(int squareIndex){
+        if (squareIndex < 0 || squareIndex >= squares.length){
+            throw new GridException("Firing at a square that is out of bounds");
+
+        }
+        return squares[squareIndex].fireAtSquare();
+
     }
 
 }

@@ -21,13 +21,18 @@ public abstract class Ship implements IShip {
         health = length;
         this.name = name;
         this.positions = positions;
+        validatePositions();
+
+        hits = new ArrayList<>(length);
+    }
+
+    private void validatePositions(){
         if (positions.length != length){
 
             throw new ShipException("Incorrect number of positions");
         }
-
-        hits = new ArrayList<>(length);
     }
+
 
     @Override
     public int getLength() {

@@ -25,7 +25,7 @@ public enum EGridLayout {
     }
 
     public static void setCustomGridSize(int numOfColumns, int numOfRows) {
-        //TODO Test this and game settings 
+        //TODO Test this and game settings
         EGridLayout.CUSTOM.numOfColumns = numOfColumns;
         EGridLayout.CUSTOM.numOfRows = numOfRows;
     }

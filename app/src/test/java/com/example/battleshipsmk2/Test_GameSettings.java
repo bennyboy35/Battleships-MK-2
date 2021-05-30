@@ -1,5 +1,6 @@
 package com.example.battleshipsmk2;
 
+import com.example.battleshipsmk2.Game.GameSettings;
 import com.example.battleshipsmk2.Ships.EShipType;
 
 import org.testng.annotations.DataProvider;
