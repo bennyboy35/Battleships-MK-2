@@ -16,13 +16,18 @@ public class GameSide {
     private final Player player;
     private final List<IShip> playerShips;
     private final Grid grid;
+    private final GameSettings gameSettings;
 
     public GameSide(Player player, GameSettings gameSettings) {
         this.player = player;
         playerShips = new ArrayList<>(100);
         this.grid = GridGenerator.generateEmptyGrid(gameSettings.getNumOfColumns(), gameSettings.getNumOfRows());
+        this.gameSettings = gameSettings;
     }
 
+    public GameSettings getGameSettings() {
+        return gameSettings;
+    }
 
     public IShotResult getAttemptedShotResult(int squareIndex) {
         Square square = grid.getSquare(squareIndex);
