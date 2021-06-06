@@ -9,7 +9,10 @@ public class GameSettings {
 
     public GameSettings(){
         lastUsedLayout = EGridLayout.CLASSIC;
+    }
 
+    public GameSettings(EGridLayout gridLayout){
+         lastUsedLayout = gridLayout;
     }
 
 

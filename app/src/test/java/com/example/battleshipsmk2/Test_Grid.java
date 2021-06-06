@@ -2,19 +2,18 @@ package com.example.battleshipsmk2;
 
 import com.example.battleshipsmk2.Grid.Grid;
 import com.example.battleshipsmk2.Grid.GridGenerator;
-import com.example.battleshipsmk2.Grid.Square;
 import com.example.battleshipsmk2.Ships.EShipType;
 
-import org.junit.Before;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertThrows;
 import static org.testng.Assert.fail;
+import static org.testng.AssertJUnit.assertNull;
 
 public class Test_Grid {
 
@@ -30,12 +29,9 @@ public class Test_Grid {
     public void test_ShipsCannotOverlap(int colIndex, int rowIndex, EShipType shipType, EDirection direction,
                                         int colIndex2, int rowIndex2, EShipType shipType2, EDirection direction2) {
         //Add first ship
-        if (!grid.attemptToAddShipReturnSuccess(colIndex, rowIndex, shipType, direction)) {
-            fail("Unable to add first ship");
-        }
-        if (grid.attemptToAddShipReturnSuccess(colIndex2, rowIndex2, shipType2, direction2)) {
-            fail("Should be unable to add ship");
-        }
+        assertNotNull(grid.attemptToAddShipReturnShip(colIndex, rowIndex, shipType, direction));
+        //Add second ship
+        assertNull(grid.attemptToAddShipReturnShip(colIndex2, rowIndex2, shipType2, direction2));
     }
 
 
@@ -53,7 +49,13 @@ public class Test_Grid {
 
     @Test(dataProvider = "shipPlacement")
     public void test_AttemptToAddShip(int colIndex, int rowIndex, EShipType shipType, EDirection direction, boolean expectedSuccess) {
-        assertEquals(grid.attemptToAddShipReturnSuccess(colIndex, rowIndex, shipType, direction), expectedSuccess);
+        if (expectedSuccess){
+            assertNotNull(grid.attemptToAddShipReturnShip(colIndex, rowIndex, shipType, direction));
+
+        } else {
+            assertNull(grid.attemptToAddShipReturnShip(colIndex, rowIndex, shipType, direction));
+        }
+
     }
 
 

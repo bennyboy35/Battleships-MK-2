@@ -3,11 +3,12 @@ package com.example.battleshipsmk2.Grid;
 import com.example.battleshipsmk2.EDirection;
 import com.example.battleshipsmk2.Exceptions.GridDimensionsException;
 import com.example.battleshipsmk2.Exceptions.GridException;
-import com.example.battleshipsmk2.Game.EShotResult;
 import com.example.battleshipsmk2.Game.IShotResult;
 import com.example.battleshipsmk2.Ships.EShipType;
 import com.example.battleshipsmk2.Ships.IShip;
 import com.example.battleshipsmk2.Ships.ShipFactory;
+
+import javax.annotation.CheckForNull;
 
 public class Grid {
 
@@ -15,7 +16,7 @@ public class Grid {
 
     private GridDimensions gridDimensions;
 
-    Grid(GridDimensions gridDimensions, Square[] squares){
+    public Grid(GridDimensions gridDimensions, Square[] squares){
 
         this.gridDimensions = gridDimensions;
         this.squares = squares;
@@ -50,31 +51,33 @@ public class Grid {
         }
 
     }
-    public boolean attemptToAddShipReturnSuccess(int colIndex, int rowIndex, EShipType shipType, EDirection direction){
+
+    @CheckForNull
+    public IShip attemptToAddShipReturnShip(int colIndex, int rowIndex, EShipType shipType, EDirection direction){
         try{
-            return attemptToAddShipReturnSuccess(gridDimensions.getSquareIndex(colIndex, rowIndex), shipType, direction);
+            return attemptToAddShipReturnShip(gridDimensions.getSquareIndex(colIndex, rowIndex), shipType, direction);
         }
         catch(GridDimensionsException exception) {
-            return false;
+            return null;
         }
     }
 
-
-    public boolean attemptToAddShipReturnSuccess(int squareIndex, EShipType shipType, EDirection direction){
+    @CheckForNull
+    public IShip attemptToAddShipReturnShip(int squareIndex, EShipType shipType, EDirection direction){
         if (!gridDimensions.willShipRemainInBounds(squareIndex, shipType, direction)){
-            return false;
+            return null;
         }
 
         int[] positions = gridDimensions.getShipPositionIndexes(squareIndex, shipType, direction);
 
         if (checkPositionsForExistingShips(positions)){
-            return false;
+            return null;
         }
         IShip ship = ShipFactory.buildShip(shipType, positions);
         for (int position : positions) {
             getSquare(position).addShip(ship);
         }
-        return true;
+        return ship;
     }
 
     private boolean checkPositionsForExistingShips(int[] positions) {
